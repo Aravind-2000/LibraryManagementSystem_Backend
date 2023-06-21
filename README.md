@@ -50,7 +50,7 @@ cd library-management-system
 
 3. Configure the database:
    - Create a new MySQL database for the application.
-   - Update the `application.properties` file with your database connection details.
+   - Update the `application.yml` file with your database connection details.
 
 4. Build the project using Maven:
 
