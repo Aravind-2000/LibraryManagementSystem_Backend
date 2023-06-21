@@ -38,6 +38,15 @@ public class BooksBorrowed {
     @JoinColumn(name = "borrowed_book_id", referencedColumnName = "book_id", insertable = false, updatable = false)
     private Books borrowedBook;
 
+
+    @Column(name = "book_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookStatus bookStatus;
+
+
+    @Column(name = "book_due_date", nullable = false)
+    private LocalDateTime dueDate;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @CreationTimestamp
     private LocalDateTime createdDate;

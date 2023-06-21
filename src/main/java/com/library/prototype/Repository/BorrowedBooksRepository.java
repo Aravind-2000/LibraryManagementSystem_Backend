@@ -2,8 +2,10 @@ package com.library.prototype.Repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import com.library.prototype.Entity.BooksBorrowed;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Long> {
 
@@ -22,5 +24,12 @@ public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Lo
             SELECT bb FROM BooksBorrowed bb LEFT JOIN Books bs ON bb.bookId = bs.bookId WHERE bs.bookId = :idValue AND bb.user = :userValue
             """)
     List<BooksBorrowed> getBooksBorrowedByBookId(String idValue, String userValue);
-    
+
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+            UPDATE BooksBorrowed bb SET bb.bookStatus = 'RETURNED' WHERE bb.bookId = :book
+            """)
+    void changeBookStatus(String book);
 }

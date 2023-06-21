@@ -1,6 +1,7 @@
 package com.library.prototype.Service;
 
 
+import com.library.prototype.Entity.BookStatus;
 import com.library.prototype.Entity.BooksBorrowed;
 import com.library.prototype.Entity.GlobalResponse;
 import com.library.prototype.Repository.BorrowedBooksRepository;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,9 +28,26 @@ public class BooksBorrowedService {
             }
             else{
                 booksBorrowed.setUser(request.getUserPrincipal().getName());
+                booksBorrowed.setBookStatus(BookStatus.BORROWED);
+                booksBorrowed.setDueDate(LocalDateTime.now().plusMonths(1));
                 borrowedBooksRepository.save(booksBorrowed);
                 var res = GlobalResponse.builder().responseData(booksBorrowed).httpStatus(HttpStatus.OK).build();
                 return ResponseEntity.ok().body(res);
+            }
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<?> changeStatusToReturned(HttpServletRequest request, String bookId){
+        try{
+            if(bookId == null){
+                return new ResponseEntity<>("DATA IS MISSING", HttpStatus.NO_CONTENT);
+            }
+            else{
+                borrowedBooksRepository.changeBookStatus(bookId);
+                return ResponseEntity.ok().body("STATUS OF THE BOOK CHANGED TO 'RETURNED'");
             }
         }
         catch (Exception e){
