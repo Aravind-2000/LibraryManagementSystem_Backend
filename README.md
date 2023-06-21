@@ -50,7 +50,7 @@ cd library-management-system
 
 3. Configure the database:
    - Create a new MySQL database for the application.
-   - Update the `application.properties` file with your database connection details.
+   - Update the `application.yml` file with your database connection details.
 
 4. Build the project using Maven:
 
@@ -69,7 +69,7 @@ mvn spring-boot:run
 
 ## Configuration
 
-The application configuration can be modified in the `application.properties` file. Some important configurations include:
+The application configuration can be modified in the `application.yml` file. Some important configurations include:
 
 - Database connection details: Update the `spring.datasource.url`, `spring.datasource.username`, and `spring.datasource.password` properties to match your database setup.
 - Server port: Change the `server.port` property to specify the desired server port number.
