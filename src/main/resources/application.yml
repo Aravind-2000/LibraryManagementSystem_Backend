@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/library
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3306/ #your database name
+    username: #your database username
+    password: #your database password
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -14,7 +14,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: 70337336763979244226452948404D6351665468576D5A7134743777217A25432A462D4A614E645267556B586E3272357538782F413F4428472B4B6250655368
-      expiration: 43200000 # a day(12 hours)
+      secret-key: #give a AES-512 key
+      expiration: #mention your jwt key expiration time in milliseconds
       refresh-token:
-        expiration: 43200000 # a day (12 hours)
+        expiration: #mention your refresh token key expiration time in milliseconds
