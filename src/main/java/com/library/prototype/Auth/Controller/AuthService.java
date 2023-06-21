@@ -1,6 +1,7 @@
 package com.library.prototype.Auth.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +37,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager manager;
     private final TokenRepository tokenRepository;
+    private final PasswordEncoder encoder;
     
 
     public ResponseEntity<?> registerUserService(SignUpDto signUpDto) {
@@ -119,6 +121,20 @@ public class AuthService {
                                       user.getOccupation(), user.getStudentObject(), user.getTeacherObject()))
                     .token(jwtToken).refreshToken(refreshToken).httpStatus(HttpStatus.OK).build(), HttpStatus.OK);
 
+    }
+
+    public ResponseEntity<?> updatePassword(PasswordChangeRequest passwordChangeRequest){
+        if(!repository.existsByUserEmail(passwordChangeRequest.getEmail().trim())) {
+            return new ResponseEntity<>(AuthenticationResponse.builder()
+                    .responseMessage("E-Mail Doesn't Exist")
+                    .httpStatus(HttpStatus.BAD_REQUEST).build(), HttpStatus.BAD_REQUEST);
+        }
+        User user = repository.findUserByEmail(passwordChangeRequest.getEmail().trim());
+        user.setPassword(encoder.encode(passwordChangeRequest.getPassword()));
+        repository.save(user);
+        return new ResponseEntity<>(AuthenticationResponse.builder()
+                .responseMessage("Password Change successfully")
+                .httpStatus(HttpStatus.OK).build(), HttpStatus.OK);
     }
 
 

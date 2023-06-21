@@ -31,6 +31,11 @@ public class AuthController {
         return authService.loginService(signInDto);
     }
 
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<?> forgotPass(@Valid @RequestBody PasswordChangeRequest request){
+        return authService.updatePassword(request);
+    }
+
     /*@PostMapping("/logout")
     public ResponseEntity<?> logout(@Valid @RequestBody LogoutRequest logoutRequest){
         return authService.logoutService(logoutRequest);
