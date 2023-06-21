@@ -1,0 +1,26 @@
+package com.library.prototype.Repository;
+
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import com.library.prototype.Entity.BooksBorrowed;
+
+public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Long> {
+
+
+    @Query(value = """
+            SELECT bb FROM BooksBorrowed bb WHERE bb.user = :userValue
+            """)
+    List<BooksBorrowed> getBooksBorrowedByUser(String userValue);
+
+    @Query(value = """
+            SELECT bb FROM BooksBorrowed bb LEFT JOIN Books bs ON bb.bookId = bs.bookId WHERE bs.bookName = :nameValue AND bb.user = :userValue
+            """)
+    List<BooksBorrowed> getBooksBorrowedByBookName(String nameValue, String userValue);
+
+    @Query(value = """
+            SELECT bb FROM BooksBorrowed bb LEFT JOIN Books bs ON bb.bookId = bs.bookId WHERE bs.bookId = :idValue AND bb.user = :userValue
+            """)
+    List<BooksBorrowed> getBooksBorrowedByBookId(String idValue, String userValue);
+    
+}
