@@ -11,6 +11,11 @@ public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Lo
 
 
     @Query(value = """
+            SELECT bb from BooksBorrowed bb WHERE bb.validFlag = 1
+            """)
+    List<BooksBorrowed> getAllValidBooks();
+
+    @Query(value = """
             SELECT bb FROM BooksBorrowed bb WHERE bb.user = :userValue
             """)
     List<BooksBorrowed> getBooksBorrowedByUser(String userValue);
@@ -32,4 +37,9 @@ public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Lo
             UPDATE BooksBorrowed bb SET bb.bookStatus = 'RETURNED' WHERE bb.bookId = :book
             """)
     void changeBookStatus(String book);
+
+    @Query(value = """
+            SELECT bb FROM BooksBorrowed bb WHERE bb.dueDate < DATE_FORMAT(CURRENT_DATE(), '%d/%m/%y')
+            """)
+    List<BooksBorrowed> getBooksByDatePassed();
 }
