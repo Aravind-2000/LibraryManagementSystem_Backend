@@ -6,14 +6,12 @@ import jakarta.mail.Message;
 import jakarta.mail.Multipart;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
