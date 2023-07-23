@@ -1,8 +1,8 @@
 package com.library.prototype.Entity;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,7 +45,7 @@ public class BooksBorrowed {
 
 
     @Column(name = "book_due_date", nullable = false)
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @CreationTimestamp
@@ -59,16 +59,4 @@ public class BooksBorrowed {
     @Column(name = "valid_flag", nullable = false)
     private int validFlag = 1;
 
-
-
-
-
-
-
-
-
-
-
-
-    
 }

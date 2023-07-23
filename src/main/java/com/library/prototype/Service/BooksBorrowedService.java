@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class BooksBorrowedService {
             else{
                 booksBorrowed.setUser(request.getUserPrincipal().getName());
                 booksBorrowed.setBookStatus(BookStatus.BORROWED);
-                booksBorrowed.setDueDate(LocalDateTime.now().plusMonths(1));
+                booksBorrowed.setDueDate(LocalDate.now().plusMonths(1));
                 borrowedBooksRepository.save(booksBorrowed);
                 var res = GlobalResponse.builder().responseData(booksBorrowed).httpStatus(HttpStatus.OK).build();
                 return ResponseEntity.ok().body(res);
