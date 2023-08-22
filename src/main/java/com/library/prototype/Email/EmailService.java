@@ -38,7 +38,7 @@ public class EmailService {
                 multipart.addBodyPart(bodyPart);
             }
             catch (Exception e){
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
             mimeMessage.setContent(multipart);
         };
