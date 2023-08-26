@@ -11,10 +11,10 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
   mail:
-    host: localhost
-    port: 8080
-    username: hello
-    password: hello
+    host: smtp.gmail.com #If you use any other host use their host name.
+    port: 587
+    username: #Your email of gmail or any other host.
+    password: #Your G-Mail password or any other.
 
     properties:
       mail:
