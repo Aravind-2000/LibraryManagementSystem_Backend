@@ -23,7 +23,7 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
     @Query("""
             UPDATE Department d SET d.departmentId = :depId, d.departmentName = :name WHERE d.randomId = :id
             """)
-    void updateDepartement(String depId, String name, Long id);
+    void updateDepartment(String depId, String name, Long id);
 
 
     @Modifying
