@@ -1,5 +1,6 @@
 package com.library.prototype.Repository;
 
+import java.awt.print.Book;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,9 @@ public interface BookRepository extends JpaRepository<Books, Integer>{
             SELECT b from Books b where b.validFlag = 1
             """)
     List<Books> getAllValidBooks();
+
+
+    Books getBooksByBookId(String bookId);
 
 
     @Modifying
