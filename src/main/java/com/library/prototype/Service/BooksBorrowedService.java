@@ -2,8 +2,10 @@ package com.library.prototype.Service;
 
 
 import com.library.prototype.Entity.BookStatus;
+import com.library.prototype.Entity.Books;
 import com.library.prototype.Entity.BooksBorrowed;
 import com.library.prototype.Entity.GlobalResponse;
+import com.library.prototype.Repository.BookRepository;
 import com.library.prototype.Repository.BorrowedBooksRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class BooksBorrowedService {
 
     private final BorrowedBooksRepository borrowedBooksRepository;
+    private final BookRepository bookRepository;
 
 
     public ResponseEntity<?> save(HttpServletRequest request, BooksBorrowed booksBorrowed){
@@ -25,7 +28,17 @@ public class BooksBorrowedService {
             if(booksBorrowed == null || booksBorrowed.getBookId() == null ){
                 return new ResponseEntity<>("DATA IS MISSING", HttpStatus.NO_CONTENT);
             }
+
+            else if (borrowedBooksRepository.existsByBookIdAndUser(booksBorrowed.getBookId(), request.getRemoteUser())){
+                return new ResponseEntity<>(" DATA ALREADY PRESENT ", HttpStatus.BAD_REQUEST);
+            }
+
             else{
+                //Decreasing the book's count after borrowing a book
+                Books currBook = bookRepository.getBooksByBookId(booksBorrowed.getBookId());
+                currBook.setBookCount(currBook.getBookCount() - 1);
+                bookRepository.save(currBook);
+
                 booksBorrowed.setUser(request.getUserPrincipal().getName());
                 booksBorrowed.setBookStatus(BookStatus.BORROWED);
                 booksBorrowed.setDueDate(LocalDate.now().plusMonths(1));
