@@ -42,4 +42,6 @@ public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Lo
             SELECT bb FROM BooksBorrowed bb WHERE bb.dueDate < DATE_FORMAT(CURRENT_DATE(), '%d/%m/%y')
             """)
     List<BooksBorrowed> getBooksByDatePassed();
+
+    boolean existsByBookIdAndUser(String bookId, String user);
 }
