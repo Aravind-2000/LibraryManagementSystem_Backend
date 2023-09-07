@@ -26,16 +26,10 @@ public class ScheduleTask {
 
     @Scheduled(cron = "0 30 10 * * ?") // Executes every day at 10.30 A.M if the due date is surpassed.
     public void invokeTask() throws MessagingException, UnsupportedEncodingException {
-        List<BooksBorrowed> booksBorrowed = booksRepository.getAllValidBooks();
+        List<BooksBorrowed> booksBorrowed = booksRepository.getBooksByDatePassedAndStatus();
         for (BooksBorrowed borrowed : booksBorrowed) {
-            if((borrowed.getBookStatus().equals(BookStatus.BORROWED)) &&
-                    (LocalDate.now().equals(borrowed.getDueDate()) || LocalDate.now().isAfter(borrowed.getDueDate()))){
-                emailService.sendMail_2(borrowed.getUser(), borrowed);
-                log.info("Scheduler worked successfully");
-            }
+            emailService.sendMail_2(borrowed.getUser(), borrowed);
+            log.info("Scheduler worked successfully");
         }
     }
-
-
-
 }

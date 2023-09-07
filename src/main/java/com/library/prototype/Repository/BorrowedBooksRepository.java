@@ -39,9 +39,9 @@ public interface BorrowedBooksRepository extends JpaRepository<BooksBorrowed, Lo
     void changeBookStatus(String book);
 
     @Query(value = """
-            SELECT bb FROM BooksBorrowed bb WHERE bb.dueDate < DATE_FORMAT(CURRENT_DATE(), '%d/%m/%y')
+            SELECT bb FROM BooksBorrowed bb WHERE bb.bookStatus = 'BORROWED' AND bb.dueDate <= DATE_FORMAT(CURRENT_DATE(), '%y/%m/%d')
             """)
-    List<BooksBorrowed> getBooksByDatePassed();
+    List<BooksBorrowed> getBooksByDatePassedAndStatus();
 
     boolean existsByBookIdAndUser(String bookId, String user);
 }
