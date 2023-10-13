@@ -11,7 +11,7 @@ public interface PermissionsRepository extends JpaRepository<Permissions, Long>{
 
 
 
-    @Query(value = "SELECT p from Permissions p WHERE user = :uEmail AND serviceName = :service AND methodName = :method")
+    @Query(value = "SELECT p from Permissions p WHERE p.user = :uEmail AND p.serviceName = :service AND p.methodName = :method")
     List<Permissions> isMethodPresent(String uEmail, String service, String method);
     
 }

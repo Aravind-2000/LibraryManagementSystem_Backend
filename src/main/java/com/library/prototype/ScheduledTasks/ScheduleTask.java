@@ -1,7 +1,6 @@
 package com.library.prototype.ScheduledTasks;
 
 import com.library.prototype.Email.EmailService;
-import com.library.prototype.Entity.BookStatus;
 import com.library.prototype.Entity.BooksBorrowed;
 import com.library.prototype.Repository.BorrowedBooksRepository;
 import jakarta.mail.MessagingException;
@@ -11,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
