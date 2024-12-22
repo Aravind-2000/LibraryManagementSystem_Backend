@@ -9,33 +9,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.library.prototype.Entity.BookCategory;
 
-public interface BookCategoryRepository extends JpaRepository<BookCategory, Integer> {
+public interface BookCategoryRepository extends JpaRepository<BookCategory, Long> {
 
+        @Query("""
+                        SELECT bc from BookCategory bc where bc.validFlag = 1
+                        """)
+        List<BookCategory> getAllValidBookCategories();
 
-    @Query("""
-            SELECT bc from BookCategory bc where bc.validFlag = 1
-            """)
-    List<BookCategory> getAllValidBookCategories();
+        @Modifying
+        @Transactional
+        @Query("""
+                        UPDATE BookCategory bc SET bc.categoryName = :name, bc.categoryDescription = :desc\s
+                        WHERE bc.randomAutoIncrementedId = :id
+                        """)
+        void updateBookCategory(String name, String desc, Long id);
 
-
-
-    @Modifying
-    @Transactional
-    @Query("""
-            UPDATE BookCategory bc SET bc.categoryName = :name, bc.categoryDescription = :desc\s
-            WHERE bc.randomAutoIncrementedId = :id
-            """)
-    void updateBookCategory(String name, String desc, Long id);
-
-
-    @Modifying
-    @Transactional
-    @Query("""
-            UPDATE BookCategory bc SET bc.validFlag = 0 WHERE bc.randomAutoIncrementedId = :id
-            """)
-    void softDeleteBookCategory(Long id);
-
-
-
+        @Modifying
+        @Transactional
+        @Query("""
+                        UPDATE BookCategory bc SET bc.validFlag = 0 WHERE bc.randomAutoIncrementedId = :id
+                        """)
+        void softDeleteBookCategory(Long id);
 
 }

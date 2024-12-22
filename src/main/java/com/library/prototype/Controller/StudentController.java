@@ -22,26 +22,24 @@ public class StudentController {
 
     private final StudentService studentService;
 
-
     @GetMapping("/getallstudents")
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll() {
         return studentService.getAllStudents();
     }
 
     @PostMapping("/savestudent")
-    public ResponseEntity<?> save(@RequestBody Student student){
+    public ResponseEntity<?> save(@RequestBody Student student) {
         return studentService.saveStudent(student);
     }
 
     @PutMapping("/updatestudent")
-    public ResponseEntity<?> update(@RequestBody Student student){
+    public ResponseEntity<?> update(@RequestBody Student student) {
         return studentService.updateStudent(student);
     }
 
     @DeleteMapping("/softdeletestudent/{sdn}")
-    public ResponseEntity<?> softDelete(@PathVariable String sdn){
+    public ResponseEntity<?> softDelete(@PathVariable String sdn) {
         return studentService.softDeleteStudent(sdn);
     }
 
-    
 }

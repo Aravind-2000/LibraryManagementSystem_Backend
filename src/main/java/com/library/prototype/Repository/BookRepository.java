@@ -8,32 +8,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.library.prototype.Entity.Books;
 
-public interface BookRepository extends JpaRepository<Books, Integer>{
+public interface BookRepository extends JpaRepository<Books, Long> {
 
+        @Query("""
+                        SELECT b from Books b where b.validFlag = 1
+                        """)
+        List<Books> getAllValidBooks();
 
-    @Query( """
-            SELECT b from Books b where b.validFlag = 1
-            """)
-    List<Books> getAllValidBooks();
+        Books getBooksByBookId(String bookId);
 
+        @Modifying
+        @Transactional
+        @Query("""
+                        UPDATE Books b SET b.bookName = :name, b.bookDescription = :desc, b.bookCount = :count,
+                        b.bookCategoryId = :bookcatid, b.bookPicture = :propic WHERE b.bookId = :bookid
+                        """)
+        void updateBook(String bookid, String name, String desc, int count, Long bookcatid, String propic);
 
-    Books getBooksByBookId(String bookId);
-
-
-    @Modifying
-    @Transactional
-    @Query("""
-            UPDATE Books b SET b.bookName = :name, b.bookDescription = :desc, b.bookCount = :count,
-            b.bookCategoryId = :bookcatid, b.bookPicture = :propic WHERE b.bookId = :bookid
-            """)
-    void updateBook(String bookid, String name, String desc, int count, Long bookcatid, String propic);
-
-
-    @Modifying
-    @Transactional
-    @Query("""
-            UPDATE Books b SET b.validFlag = 0 WHERE b.bookId = :id
-            """)
-    void softDeleteBook(String id);
+        @Modifying
+        @Transactional
+        @Query("""
+                        UPDATE Books b SET b.validFlag = 0 WHERE b.bookId = :id
+                        """)
+        void softDeleteBook(String id);
 
 }

@@ -30,4 +30,9 @@ public class ScheduleTask {
             log.info("Scheduler worked successfully");
         }
     }
+
+    @Scheduled(initialDelay = 5000, fixedDelay = 5000, cron = "0 0 0 * * 6,0")
+    public void weekendTask() throws MessagingException, UnsupportedEncodingException {
+
+    }
 }
